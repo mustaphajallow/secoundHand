@@ -1,5 +1,4 @@
-import { Dimensions, ImageBackground, Platform, TextInput } from "react-native";
-import { Link, router } from 'expo-router';
+import { ImageBackground, Platform, TextInput } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -12,9 +11,8 @@ import {
   TouchableOpacity,
   StatusBar,
   SafeAreaView,
-  
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import SVGComponent from "@/assets/icons/icon";
 import Location from "@/assets/icons/location";
 import Search from "@/assets/icons/Search";
@@ -25,37 +23,26 @@ import Poduct from "@/components/Product";
 import Cloths from "@/assets/icons/Cloths";
 import Forniturs from "@/assets/icons/Forniturs";
 import LogoIcon from "@/assets/icons/LogoIcon";
-import SchoolIcon from "@/assets/icons/schoolIcon";
-import PagerView from "react-native-pager-view";
+import AddIcon from "@/assets/icons/AddIcon";
 
 // import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function HomeScreen() {
-  const [text, onChangeText] = React.useState("");
+export default function Shop() {
+  const [text, onChangeText] = React.useState("Search you products");
   const [number, onChangeNumber] = React.useState("");
-
-
-    // This navigation event will trigger the error above.
-  
- 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <StatusBar barStyle="dark-content" />
         {/* Top Bar */}
         <View style={styles.topBar}>
-          <View style={{marginRight:5}}>
-           <LogoIcon width={25}  height={25} color={"#0891b2"}/> 
+          <View style={{marginRight:5,borderRadius:100}}>
+           <LogoIcon width={25}  height={25}/> 
           </View>
         
-          <Text style={styles.brandName}>Secound Hand</Text>
+          <Text style={styles.brandName}>Your Product</Text>
           <View style={styles.icons}>
-            <TouchableOpacity >
-             <Link href={"/SignIn"}>  
-              <SVGComponent color={"#FD7519"}  width={25}  height={25}/>
-             </Link>
-            </TouchableOpacity>
-         
+            <AddIcon color="black" width={25}  height={25} />
             {/* <Icon name="notifications-outline" size={24} style={styles.iconSpacing} /> */}
           </View>
         </View>
@@ -72,26 +59,17 @@ export default function HomeScreen() {
               borderRadius:20
             }}
           >
-            <Search color={"#FD7519"} width={22} height={22}></Search>
+            <Search color="#FD7519" width={25} height={25}> </Search>
             <TextInput
               style={styles.input}
               onChangeText={onChangeText}
-              placeholder="Search"
               value={text}
             />
           </View>
         </View>
 
-        {/* Delivery Section */}
-        <View style={styles.delivery}>
-          <Location  color='#FD7519' width={22}  height={22}/>
-
-          {/* <Text>icon</Text> */}
-
-          <Text style={styles.deliveryText}>
-            Deliver to Jl. Rose No. 123 Block A, Cipete Sub-District
-          </Text>
-        </View>
+   
+    
 
         {/* Categories */}
         <View  style={{flexDirection:"column", gap:2,flexWrap:"wrap"}}>
@@ -99,13 +77,13 @@ export default function HomeScreen() {
           {[
             { name: "Phone", icon: <Phone width={75}  height={75}/> },
             { name: "Laptop", icon: <Laptop width={75}  height={75}/> },
-             { name: "School", icon: <SchoolIcon width={75}  height={75}/> },
+            // { name: "Headset", icon: <Hedset width={75}  height={75}/> },
             { name: "Cloth", icon: <Cloths width={75}  height={75} /> },
             { name: "Forniturs", icon: <Forniturs width={75}  height={75} /> },
            
           
           ].map((category, index) => (
-            <View key={category.name} style={styles.category}>
+            <View key={index} style={styles.category}>
              {category.icon}
 
 
@@ -113,35 +91,31 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
-        
+
         </View>
+    
 
         {/* Flash Sale Banner */}
-        {/* <AutoSlidingPager /> */}
+      
 
         {/* Flash Sale Items */}
         <View style={styles.flashSaleItems}>
             {productData.map((p)=>{
               return(
-                
-                    <Poduct image={p.image} price={p.price} discription={p.discription} id={p.id} key={p.id}/>
-            
-                
+                <Poduct image={p.image} price={p.price} discription={p.discription}/>
               )}
             )} 
        
         </View>
-  
       </ScrollView>
     </SafeAreaView>
   );
-  
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FBF9ED",
+    backgroundColor: "#fff",
   },
   input: {              width:"98%",
   },
@@ -158,8 +132,13 @@ const styles = StyleSheet.create({
     textAlign:"left",
   },
   icons: {
+    padding:8,
+    borderWidth:2,
+    borderColor:"#A6A6A6",
     flexDirection: "row",
     marginLeft:"auto",
+  borderRadius:100,
+
   },
   iconSpacing: {
     marginLeft: 16,
@@ -175,16 +154,16 @@ const styles = StyleSheet.create({
   },
   categories: {
     flexDirection: "row",
-    flexWrap: "wrap",
+    flexWrap:"wrap",
     justifyContent: "space-around",
     padding: 16,
+
+
   },
   category: {
-    display:"flex",
-    flexDirection:"column",
     alignItems: "center",
     marginBottom: 16,
-  width:"30%"
+    width:"30%"
   },
   categoryText: {
     marginTop: 8,
@@ -259,20 +238,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius:20
   },
-  pagerView: {
-    flex: 1,
-    height: 200, // Adjust the height as needed
-  },
-  page: {
-    justifyContent: "center",
-    alignItems: "center",
-    // backgroundColor: "#f5f5f5",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color:"black"
-  },
 });
 const productData=[
   {
@@ -309,93 +274,3 @@ image:"https://images.unsplash.com/photo-1658933154992-d5375e01c535?w=500&auto=f
               },
 ]
 
-
-const AutoSlidingPager = () => {
-  const pagerRef = useRef(null); // Reference to the PagerView
-  const [currentPage, setCurrentPage] = useState(0); // Track the current page
-
-  // Dummy data for the pages
-  // const pages = [
-  //   { id: 1, title: "Welcome to Page 1" },
-  //   { id: 2, title: "Discover Page 2" },
-  //   { id: 3, title: "Explore Page 3" },
-  // ];
-
-  const pages=[
-    {
-      id:1,
-      image:"https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-      persent:"23%",
-      notes:"CashBank up to 100%",
-      shop:"Shop now"
-    },
-    {
-      id:0,
-      image:"https://images.unsplash.com/photo-1504274066651-8d31a536b11a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-      persent:"23%",
-      notes:"CashBank up to 100%",
-      shop:"Shop now"
-    },
-    {
-      id:2,
-      image:"https://images.unsplash.com/photo-1503602642458-232111445657?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D",
-      persent:"3%",
-      notes:"Confort to your  home",
-      shop:"House material"
-    }
-  ]
-
-  // Automatically slide the pages
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPage((prevPage) => {
-        const nextPage = (prevPage + 1) % pages.length; // Loop back to the first page
-        pagerRef.current?.setPage(nextPage); // Move to the next page
-        return nextPage;
-      });
-    }, 3000); // Slide every 3 seconds
-
-    // Clear interval when component unmounts
-    return () => clearInterval(interval);
-  }, [pages.length]);
-
-  return (
-    <View>
-    <View style={{width:"100%" , height:200}}>
-
-          <PagerView
-      style={{ flex: 1, width: "100%", height: 400 }}
-      initialPage={0}
-      ref={pagerRef} // Attach the ref
-      onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} // Update current page on manual swipe
-    >
-      {pages.map((page, index) => (
-        <View key={page.id} style={styles.page}>
-          {/* <Text style={styles.text}>{page.title}</Text> */}
-           <TouchableOpacity  style={styles.flashSaleBanner}>
-       
-    
-        <ImageBackground 
-     source={{ uri: page.image }} 
-     style={styles.backgroundImage}
-     imageStyle={{ borderRadius: 20 }}
-     resizeMode="cover"  // Or "contain", "stretch", etc.
-   ></ImageBackground>
-       <View style={styles.flashSaleTextContainer}>
-         <Text style={styles.flashSaleText}>6.6 Flash Sale</Text>
-         <Text style={styles.flashSaleSubText}>Cashback Up to 100%</Text>
-         <Text style={styles.shopNowButton}>Shop Now</Text>
-       </View>
-     </TouchableOpacity>
-          
-        </View>
-      ))}
-    </PagerView>
-    </View>
-   
-
-    </View>
-
-
-  );
-};

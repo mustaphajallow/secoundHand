@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "56545838883",
+    "project_id": "secound-users",
+    "storage_bucket": "secound-users.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56545838883:android:076e8c6ebb4cf76086ee96",
+        "android_client_info": {
+          "package_name": "com.mystory1.work"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALYTw_O3jEi0pJHxEYGuDO8bgDSUcHcEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
