@@ -36,7 +36,9 @@ export default function HomeScreen() {
 
 
     // This navigation event will trigger the error above.
-  
+  const sig =()=>{
+    router.push("/(root)/SignIn")
+  }
  
   return (
     <SafeAreaView style={styles.container}>
@@ -51,7 +53,7 @@ export default function HomeScreen() {
           <Text style={styles.brandName}>Secound Hand</Text>
           <View style={styles.icons}>
             <TouchableOpacity >
-             <Link href={"/SignIn"}>  
+             <Link href={"/(root)/SignIn"}>  
               <SVGComponent color={"#FD7519"}  width={25}  height={25}/>
              </Link>
             </TouchableOpacity>
@@ -105,7 +107,7 @@ export default function HomeScreen() {
            
           
           ].map((category, index) => (
-            <View key={category.name} style={styles.category}>
+            <View key={index} style={styles.category}>
              {category.icon}
 
 
@@ -117,7 +119,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Flash Sale Banner */}
-        {/* <AutoSlidingPager /> */}
+        <AutoSlidingPager />
 
         {/* Flash Sale Items */}
         <View style={styles.flashSaleItems}>

@@ -1,19 +1,29 @@
-import { Stack } from 'expo-router';
-
+import { router, Stack } from 'expo-router';
 
 
 export default function Layout() {
   return (
-    <Stack>
+    <Stack  screenOptions={{
+      headerShown:false
+    }}>
       {/* <Stack.Screen name="(root)" /> */}
       <Stack.Screen
         name="SignUp"
         options={{
           presentation: 'modal',
+          headerShown:false,
+        }}
+      />
+        <Stack.Screen
+        name="SignIn"
+        options={{
+          headerShown:false,
+          presentation: "fullScreenModal",
         }}
       />
     </Stack>
   );
+
 }
 
 

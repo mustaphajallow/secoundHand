@@ -99,9 +99,9 @@ export default function Card() {
 
         {/* Flash Sale Items */}
         <View style={styles.flashSaleItems}>
-            {productData.map((p)=>{
+            {productData.map((p, index)=>{
               return(
-                <PoductTran key={p} image={p.image} price={p.price} discription={p.discription}/>
+                <PoductTran key={index} image={p.image} price={p.price} discription={p.discription}/>
               )}
             )} 
        
@@ -261,7 +261,7 @@ image:"https://images.unsplash.com/photo-1658933154992-d5375e01c535?w=500&auto=f
         image:"https://images.unsplash.com/photo-1595675024853-0f3ec9098ac7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D",
           },
           {
-            id:0,
+            id:4,
             catagory:"phone",
             price:"15,000",
             discription:"iPad Pro 6th Generation",

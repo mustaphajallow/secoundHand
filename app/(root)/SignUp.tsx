@@ -1,174 +1,105 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, SafeAreaView,StyleSheet, StatusBar } from 'react-native';
-import { useRouter } from 'expo-router';
+import React, { useRef, useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { Link, useRouter } from "expo-router";
+import SigninIcon from "@/assets/icons/signin";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { routeToScreen } from "expo-router/build/useScreens";
+import { DrawerRouter } from "@react-navigation/native";
 
- const SignUpScreen = ()=> {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+
+  export default function SignUp (){
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+
+      
 
   return (
-    <SafeAreaView style={styles.container}>
-              <StatusBar barStyle="dark-content" />
+    <KeyboardAvoidingView style={styles.container}  
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  
+           
+ <View style={{marginTop:10, width:"100%", padding:20}}>
 
-         <View >
+
+      <View style={{marginLeft:"auto",marginRight:"auto"}}>
+           <SigninIcon width={200} height={220}>   </SigninIcon>
+  
+   
+      </View>
+   
+
+      <Text style={{fontWeight:"600", fontSize:30}}>SignUp</Text>
+      <View style={{marginTop:20}}>
+             <Text style={{fontSize:16}}>User Name</Text>
       <TextInput
-        placeholder="Email"
+        style={styles.input}
+        placeholder="jon doe"
+        
+        placeholderTextColor={"#56666B"}
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        style={{ marginBottom: 20, padding: 10, borderWidth: 1, borderColor: '#ccc' }}
       />
+        </View>
+
+
+        <View style={{marginTop:12}}>
+             <Text style={{fontSize:16}}>Email</Text>
       <TextInput
-        placeholder="Password"
+        style={styles.input}
+        placeholder="@email.com"
+        
+        placeholderTextColor={"#56666B"}
+        value={email}
+        onChangeText={setEmail}
+      />
+        </View>
+
+     
+     
+
+      
+    
+        <View style={{marginTop:24}}>
+        <Text style={{fontSize:16}}>Password</Text>
+           <TextInput
+        style={styles.input}
+        placeholder=" . . ."
+        placeholderTextColor={"#56666B"}
+        secureTextEntry
         value={password}
         onChangeText={setPassword}
-        secureTextEntry
-        style={{ marginBottom: 20, padding: 10, borderWidth: 1, borderColor: '#ccc' }}
       />
-      <Button title="Sign Up" onPress={()=>{}} />
-      {error && <Text>{error}</Text>}
-    </View>
-    </SafeAreaView>
- 
+       </View>
+   
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+      <TouchableOpacity onPress={() =>{
+        
+router.push("/(tabs)")
+
+      } }  style={{ display:"flex", alignItems:"center",justifyContent:"center" ,flexDirection:"row",
+                backgroundColor:"#fa5a2a",padding:14, borderRadius:10, marginTop:23}}>
+              
+                 <Text style={{color:"white",marginLeft:20,alignItems:"center", fontWeight:"600"}}>SignUp</Text>
+            </TouchableOpacity > 
+
+           
+     
+     
+      </View> 
+      
+      
+      </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  input: {              width:"98%",
-  },
-  topBar: {
-    flexDirection: "row",
-    //justifyContent: "space-between",
-    padding: 16,
-    alignItems: "center",
-  },
-  brandName: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000",
-    textAlign:"left",
-  },
-  icons: {
-    flexDirection: "row",
-    marginLeft:"auto",
-  },
-  iconSpacing: {
-    marginLeft: 16,
-  },
-  delivery: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-  },
-  deliveryText: {
-    marginLeft: 8,
-    color: "#777",
-  },
-  categories: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    padding: 16,
-  },
-  category: {
-    display:"flex",
-    flexDirection:"column",
-    alignItems: "center",
-    marginBottom: 16,
-  width:"30%"
-  },
-  categoryText: {
-    marginTop: 8,
-    fontSize: 12,
-  },
-  flashSaleBanner: {
-    flexDirection: "column",
-    alignItems: "center",
-    padding: 16,
-    position:"relative",
-    width:"100%",
-    height:200,overflow:"hidden",
-    borderRadius:20,
-    
-
-
-  
-  },
-  bannerImage: {
-     width:'100%',
-     height:"20%",
-    borderRadius: 8,
-  },
-  flashSaleTextContainer: {
-    
-      position: 'absolute',  // This makes the overlay content sit on top of the image
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      justifyContent: 'center',  // Centering the overlay content
-      alignItems: 'center',
-  },
-  flashSaleText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  flashSaleSubText: {
-    color: "#777",
-  },
-  shopNowButton: {
-    color: "#FF6F61",
-    marginTop: 8,
-  },
-  flashSaleItems: {
-    flexDirection: "row",
-    flexWrap:"wrap",
-    justifyContent: "space-between",
-    padding: 16,
-  },
-  item: {
-    alignItems: "center",
-    width: "48%",
-  },
-  itemImage: {
-    width: "100%",
-    height: 120,
-    borderRadius: 8,
-  },
-  discountText: {
-    color: "#FF6F61",
-    marginTop: 8,
-  },
-  itemText: {
-    marginTop: 4,
-    textAlign: "center",
-  },
-  backgroundImage: {
-    width:"100%",
-    height:"100%",  // Ensures the image takes up the entire screen
-    justifyContent: 'center',  // Centers the content
-    alignItems: 'center',
-    borderRadius:20
-  },
-  pagerView: {
-    flex: 1,
-    height: 200, // Adjust the height as needed
-  },
-  page: {
-    justifyContent: "center",
-    alignItems: "center",
-    // backgroundColor: "#f5f5f5",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color:"black"
-  },
+  container: {  justifyContent: 'center',height:"100%",width:"100%", // Adjust based on your layout
+    alignItems: 'center', backgroundColor:"#FBF9ED"},
+  input: { borderWidth: 0, marginVertical: 8, padding: 8, borderRadius: 4,color:"black", borderBottomWidth:1 },
+  error: { color: "red", marginVertical: 4 },
 });
-export default SignUpScreen;

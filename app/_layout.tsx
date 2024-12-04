@@ -4,7 +4,6 @@ import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { SetStateAction, useEffect, useState } from 'react';
-import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useInitializeExpoRouter } from 'expo-router/build/global-state/router-store';
 import React from 'react';
@@ -37,16 +36,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider  value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack  >
+      <Stack initialRouteName='(root)' screenOptions={{
+        headerShown:false
+      }}>
       
     
           
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-         <Stack.Screen name="(stacks)" options={{ headerShown: false }} />
+        
        
       
    
-            <Stack.Screen name="SignUp" options={{ headerShown: false , presentation:'fullScreenModal' }}  />
          
             
           
