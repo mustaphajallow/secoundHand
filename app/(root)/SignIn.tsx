@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard, StatusBar } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useRouter } from "expo-router";
 import SigninIcon from "@/assets/icons/signin";
@@ -84,6 +84,7 @@ const [hasAcc , setAcc] = useState(true)
       
      
       </TouchableWithoutFeedback>
+    
     </KeyboardAvoidingView>
   );
 }

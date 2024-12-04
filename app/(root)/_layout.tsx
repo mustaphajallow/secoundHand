@@ -1,4 +1,5 @@
 import { router, Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function Layout() {
@@ -21,6 +22,7 @@ export default function Layout() {
           presentation: "fullScreenModal",
         }}
       />
+       <StatusBar style="auto" />
     </Stack>
   );
 
