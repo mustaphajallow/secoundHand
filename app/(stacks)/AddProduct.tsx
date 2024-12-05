@@ -1,7 +1,7 @@
 
 // app/home/product/[id].js
-import { useLocalSearchParams } from "expo-router";
-import { FlatList, ImageBackground, Platform, TextInput } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import { Button, ImageBackground, Platform, TextInput } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -23,22 +23,62 @@ import Poduct from "@/components/Product";
 
 import LogoIcon from "@/assets/icons/LogoIcon";
 import { CreateProduct, productsList } from "@/components/productServicess";
+import * as ImagePicker from 'expo-image-picker';
+import ImageIcon from "@/assets/icons/ImageIcon";
 
-
-export default function ProductList() {
+export default  function AddProduct () {
   const { id } = useLocalSearchParams(); // Get the product ID from the route
   const [text, onChangeText] = React.useState("Search ");
   const [number, onChangeNumber] = React.useState("");
-   const [products , setProducts] = useState([])
+  const [image, setImage] = useState<string | null>(null);
+  const [img , setImg] = useState("")
+  const [name , setName] = useState("")
+  const [price , setPrice] = useState("")
+  const [discount , setDiscount] = useState("")
+  const [Discri , setDiscri] = useState("")
 
-   useEffect(()=>{
-    const getproduct=async ()=>{
+ function saveProduct(){
+  const product:any = {name,price,img,discount,Discri }
+  console.log(product)
+  CreateProduct(product)
+ 
+
+ }
+
+ const [products , setProducts] = useState([])
+
+ useEffect(()=>{
+
+  const fetchProduct = async ()=>{
+    try{
       const data = await productsList();
       setProducts(data);
+    }catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false);  // Stop the loading indicator
     }
-    getproduct()
-   },[])
+  }
+  fetchProduct();
+ },[]);
+
  
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result:[] = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  console.log(result);
+  setImg(result)
+
+  if (!result.canceled) {
+    setImage(result.assets[0].uri);
+  }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
               <StatusBar barStyle="dark-content" />
@@ -53,56 +93,84 @@ export default function ProductList() {
             <LogoIcon width={25} height={25} />
           </View>
 
-          <Text style={styles.brandName}>Product List</Text>
+          <Text style={styles.brandName}>Add a New Product</Text>
       
         </View>
         {/* search you need */}
-        <View style={styles.topBar}>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 6,
-              padding: 10,
-              backgroundColor: "rgba(0,0,0,0.1)",
-              width: "100%",
-              borderRadius: 20,
-            }}
-          >
-            <Search color="#FD7519" width={25} height={25}> </Search>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeText}
-              value={text}
-            />
-          </View>
+        <View style={{flexDirection:"column", alignItems:"center"}}>
+   
+            <TouchableOpacity onPress={pickImage}>
+
+              <View>
+               <ImageIcon  width={50} height={52}/>
+              </View>
+            </TouchableOpacity>
+            {image && <Image source={{ uri: image }} style={{  width: 200,
+                 height: 200, borderRadius:20}} />}
         </View>
 
         {/* Flash Sale Items */}
         <View style={styles.flashSaleItems}>
-        <FlatList
-           data={products}
-         keyExtractor={(item) => item.id}
-           renderItem={({ item }) => (
-            <Poduct
-            key={item.id}
-              image={item.name}
-              price={item.price}
-              discription={item.discription}
-            />
-      )}
-    />
+          <View style={{marginTop:12, width:"100%"}}>
+             <Text style={{fontSize:16}}>Product Name</Text>
+            <TextInput
+        style={styles.input}
+        placeholder="null"
+        
+        placeholderTextColor={"#56666B"}
+        value={name}
+        onChangeText={setName}
+      />
+        </View>
+        <View style={{flexDirection:"row" ,gap:"3.2%"}}>
 
-          {/* {products.map((p, index) => {
-            return (
-              <Poduct
-              key={index}
-                image={p.name}
-                price={p.price}
-                discription={p.discription}
-              />
-            );
-          })} */}
+        <View style={{marginTop:12, width:"48%"}}>
+             <Text style={{fontSize:16}}> Price</Text>
+            <TextInput
+        style={styles.input}
+        placeholder="$ 0.00"
+        keyboardType="number-pad"
+        placeholderTextColor={"#56666B"}
+        value={price}
+        onChangeText={setPrice}
+      />
+        </View>
+        <View style={{marginTop:12, width:"48%"}}>
+             <Text style={{fontSize:16}}>Discount %</Text>
+            <TextInput
+        style={styles.input}
+        placeholder="0%"
+        
+        placeholderTextColor={"#56666B"}
+        value={discount}
+        onChangeText={setDiscount}
+      />
+        </View>
+        </View>
+
+
+        <View style={{marginTop:12, width:"100%"}}>
+             <Text style={{fontSize:16}}>Description</Text>
+            <TextInput
+        style={styles.input}
+        placeholder="is about"
+        
+        placeholderTextColor={"#56666B"}
+        value={Discri}
+        onChangeText={  setDiscri}
+      />
+        </View>
+        <TouchableOpacity onPress={() =>{
+        saveProduct()
+      router.dismiss()
+    
+      
+    } }  style={{ display:"flex", alignItems:"center",justifyContent:"center" ,flexDirection:"row",
+              backgroundColor:"#fa5a2a",padding:14, borderRadius:10, marginTop:23}}>
+            
+               <Text style={{color:"white",marginLeft:20,textAlign:"center", fontWeight:"600"}}>Submit</Text>
+          </TouchableOpacity > 
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -114,7 +182,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  input: { width: "98%" },
+  input: { width: "98%" , borderBottomWidth:1, padding:7},
   topBar: {
     flexDirection: "row",
     //justifyContent: "space-between",
@@ -201,6 +269,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     padding: 16,
+    width:"100%",
+    gap:22
   },
   item: {
     alignItems: "center",
@@ -266,27 +336,8 @@ const productData = [
   },
 ];
 
-const product = [
-  {
-    id: 0,
-    image: [
-      {
-        id: 1,
-        img: "https://images.unsplash.com/photo-1599950753725-ea5d8aba0d29?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aXBob25lfGVufDB8fDB8fHww",
-      },
-      {
-        id: 2,
-        img: "https://images.unsplash.com/photo-1599950755346-a3e58f84ca63?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aXBob25lfGVufDB8fDB8fHww",
-      },
-      {
-        id: 3,
-        img: "https://images.unsplash.com/photo-1603145733316-7462e5ecd80d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGlwaG9uZXxlbnwwfHwwfHx8MA%3D%3D",
-      },
-    ],
-    information: "Iphone 15 pro, 6 month of use",
-    stole: false,
-    Views: "5K",
-    price: "D 20,000",
-    discount: "10%",
-  },
-];
+
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+

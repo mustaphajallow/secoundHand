@@ -1,22 +1,49 @@
-import React, { useRef, useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard, StatusBar } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard, StatusBar, Alert } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useRouter } from "expo-router";
 import SigninIcon from "@/assets/icons/signin";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { routeToScreen } from "expo-router/build/useScreens";
 import { DrawerRouter } from "@react-navigation/native";
+import { getAllUsers } from "@/components/UsersServices";
 
 
   const  Login= () =>{
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isAccout, setIsAccount] = useState(false) 
   const router = useRouter();
-const [hasAcc , setAcc] = useState(true)
+const [hasAcc , setAcc] = useState(-1)
 
       
+const [users, setUsers] = useState([]);
 
+useEffect(() => {
+  const fetchUsers = async () => {
+    try {
+      const data = await getAllUsers(); // Call the API function
+      setUsers(data); // Update state with the fetched users
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false); // Stop the loading indicator
+    }
+  };
+
+  fetchUsers();
+}, []);
+
+const [newAcc , setNewAcc] = useState({})
+function seeingAccount(){
+  
+  for(const persion in users){
+   
+ 
+  
+  }
+}
   return (
     <KeyboardAvoidingView style={styles.container} 
      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
@@ -66,7 +93,11 @@ const [hasAcc , setAcc] = useState(true)
        </View>
        </TouchableWithoutFeedback>
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <TouchableOpacity onPress={() => router.push("/(tabs)")}  style={{ display:"flex", alignItems:"center",justifyContent:"center" ,flexDirection:"row",
+      <TouchableOpacity onPress={() => {
+       
+        {true ? router.push("/(tabs)") : alert("wrong Inputs")}
+       
+      }}  style={{ display:"flex", alignItems:"center",justifyContent:"center" ,flexDirection:"row",
                 backgroundColor:"#fa5a2a",padding:14, borderRadius:10, marginTop:23}}>
               
                  <Text style={{color:"white",marginLeft:20,alignItems:"center", fontWeight:"600"}}>Login</Text>
@@ -97,3 +128,7 @@ const styles = StyleSheet.create({
 });
 
 export default  Login;
+
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
