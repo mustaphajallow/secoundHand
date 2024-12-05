@@ -11,12 +11,19 @@ export default function Layout() {
       <Stack.Screen
         name="SignUp"
         options={{
-          presentation: 'modal',
+          presentation: 'fullScreenModal',
           headerShown:false,
         }}
       />
         <Stack.Screen
         name="SignIn"
+        options={{
+          headerShown:false,
+          presentation: "fullScreenModal",
+        }}
+      />
+        <Stack.Screen
+        name="AddProduct"
         options={{
           headerShown:false,
           presentation: "fullScreenModal",
