@@ -5,7 +5,6 @@ import { Link, useRouter } from "expo-router";
 import SigninIcon from "@/assets/icons/signin";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { routeToScreen } from "expo-router/build/useScreens";
-import { DrawerRouter } from "@react-navigation/native";
 
 
   export default function SignUp (){
