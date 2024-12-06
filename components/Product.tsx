@@ -22,17 +22,18 @@ const Poduct = ({image,discription,price}: any) =>{
     <View style={styles.flashSaleItems}>
           <View style={styles.item}>
             {
-              image.isFetching  ?  <ActivityIndicator size="small" color="#0000ff" />:
+              image === null ?  <ActivityIndicator size="small" color="#0000ff" />:
           
          
             <Image
               source={{
-                uri: image,
+                uri: image == null ? "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D" :
+                 image,
               }}
               style={styles.itemImage}
             />  }
             <View style={{padding:5, gap:4}}>
-                  <Text style={{textAlign:"left"}}>{price}</Text>
+                  <Text style={{textAlign:"left"}}>{price == null ? " null" : price}</Text>
             <Text style={styles.discountText}>6% off</Text>
             <Text style={styles.itemText}>{discription}</Text> 
             </View>

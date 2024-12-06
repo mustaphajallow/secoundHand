@@ -22,14 +22,17 @@ export default function Layout() {
           presentation: "fullScreenModal",
         }}
       />
-        <Stack.Screen
+
+           <Stack.Screen
+
         name="AddProduct"
         options={{
           headerShown:false,
           presentation: "fullScreenModal",
         }}
       />
-       <StatusBar style="auto" />
+
+
     </Stack>
   );
 

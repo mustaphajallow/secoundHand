@@ -1,12 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+
+
 import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, Keyboard, StatusBar, Alert } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useRouter } from "expo-router";
-import SigninIcon from "@/assets/icons/signin";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { routeToScreen } from "expo-router/build/useScreens";
-import { DrawerRouter } from "@react-navigation/native";
-import { getAllUsers } from "@/components/UsersServices";
+
+import SigninIcon from "../../assets/icons/signin";
+import { useState } from "react";
+
+
+// import { auth } from "@/components/firebase.";
+
 
 
   const  Login= () =>{
@@ -17,8 +23,42 @@ import { getAllUsers } from "@/components/UsersServices";
   const router = useRouter();
 const [hasAcc , setAcc] = useState(-1)
 
+
+// const handleLogIn=() =>{
+//   auth.signInWithEmailAndPassword(email , password )
+//   .then(( usercretenteial )=>{  const user = usercretenteial.user
+//     console.log("login with",user.email)
+//   }) .catch(error => alert(error.message))
+// }
       
 const [users, setUsers] = useState([]);
+
+// useEffect(() => {
+//   const fetchUsers = async () => {
+//     try {
+//       const data = await getAllUsers(); // Call the API function
+//       setUsers(data); // Update state with the fetched users
+//     } catch (error) {
+//       console.error('Error fetching users:', error);
+//     } finally {
+//       setLoading(false); // Stop the loading indicator
+//     }
+//   };
+
+//   fetchUsers();
+// }, []);
+
+const [newAcc , setNewAcc] = useState({})
+
+// useEffect(()=>{
+//  const unsuncribe = auth.onAuthStateChanged((user) =>{
+//   if(user){
+//     router.push("/(tabs)") 
+//   }
+// })
+// return unsuncribe;
+// },[])
+
 
 useEffect(() => {
   const fetchUsers = async () => {
@@ -95,7 +135,9 @@ function seeingAccount(){
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <TouchableOpacity onPress={() => {
        
-        {true ? router.push("/(tabs)") : alert("wrong Inputs")}
+
+            router.dismissTo("/(tabs)")
+
        
       }}  style={{ display:"flex", alignItems:"center",justifyContent:"center" ,flexDirection:"row",
                 backgroundColor:"#fa5a2a",padding:14, borderRadius:10, marginTop:23}}>
@@ -132,3 +174,7 @@ export default  Login;
 function setLoading(arg0: boolean) {
   throw new Error("Function not implemented.");
 }
+
+
+
+

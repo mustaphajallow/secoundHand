@@ -22,11 +22,36 @@ import Search from "@/assets/icons/Search";
 import Poduct from "@/components/Product";
 
 import LogoIcon from "@/assets/icons/LogoIcon";
-import { CreateProduct, productsList } from "@/components/productServicess";
+
+import { productsList } from "@/components/ProductServices";
+
 
 
 export default function ProductList() {
   const { id } = useLocalSearchParams(); // Get the product ID from the route
+
+  const [text, onChangeText] =   useState("Search ");
+  const [loading, setLoading] = useState(true);
+
+  
+ const [products , setProducts] = useState([])
+
+ useEffect(()=>{
+
+  const fetchProduct = async ()=>{
+    try{
+      const data = await productsList();
+      setProducts(data);
+    }catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false);  // Stop the loading indicator
+    }
+  }
+  fetchProduct();
+ },[]);
+
+
   const [text, onChangeText] = React.useState("Search ");
   const [number, onChangeNumber] = React.useState("");
    const [products , setProducts] = useState([])
@@ -39,6 +64,7 @@ export default function ProductList() {
     getproduct()
    },[])
  
+
   return (
     <SafeAreaView style={styles.container}>
               <StatusBar barStyle="dark-content" />
@@ -81,28 +107,20 @@ export default function ProductList() {
         {/* Flash Sale Items */}
         <View style={styles.flashSaleItems}>
         <FlatList
-           data={products}
-         keyExtractor={(item) => item.id}
-           renderItem={({ item }) => (
-            <Poduct
-            key={item.id}
-              image={item.name}
-              price={item.price}
-              discription={item.discription}
-            />
-      )}
-    />
 
-          {/* {products.map((p, index) => {
-            return (
-              <Poduct
-              key={index}
-                image={p.name}
-                price={p.price}
-                discription={p.discription}
+           data={product}
+         renderItem={(data)=>{ return(
+          <Poduct
+              key={data.index}
+                image={data.image}
+                price={data.price}
+                discription={data.discription}
               />
-            );
-          })} */}
+         )}}
+      
+           />
+       
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -201,6 +219,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     padding: 16,
+   
   },
   item: {
     alignItems: "center",

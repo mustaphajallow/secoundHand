@@ -1,12 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useRouter } from "expo-router";
-import SigninIcon from "@/assets/icons/signin";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { routeToScreen } from "expo-router/build/useScreens";
-import { DrawerRouter } from "@react-navigation/native";
-import { CreateUsers, getAllUsers, listUsers } from "@/components/UsersServices";
+
+
+import SigninIcon from "../../assets/icons/signin";
+import { getAllUsers } from "@/components/userServices";
+
+
+// import { auth } from "@/components/firebase.";
+
 
 
   export default function SignUp (){
@@ -15,6 +20,25 @@ import { CreateUsers, getAllUsers, listUsers } from "@/components/UsersServices"
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+
+
+  // const handleSignup=() =>{
+  //   auth.createUserWithEmailAndPassword(email , password )
+  //   .then(( usercretenteial )=>{  const user = usercretenteial.user
+  //     console.log("register w ith",user.email)
+  //   }) .catch(error => alert(error.message))
+  // }
+
+// function saveUser(){
+// const User = {firstName,email ,password}
+//    console.log(User)
+//   CreateUsers(User)
+//   const list = listUsers;
+//   console.log(list)
+  
+// }
+const [users, setUsers] = useState([]);
+
 
 function saveUser(){
 const User = {firstName,email ,password}
@@ -25,6 +49,7 @@ const User = {firstName,email ,password}
   
 }
 const [users, setUsers] = useState([]);
+
 
 useEffect(() => {
   const fetchUsers = async () => {
@@ -54,11 +79,11 @@ useEffect(() => {
   
    
       </View>
-   {users.map((data)=>{
-    return(
-      <Text style={{fontWeight:"600", fontSize:30}}>{data.firstName}</Text>
-    )
-   })}
+
+
+      <Text style={{fontWeight:"600", fontSize:30}}>SignUp</Text>
+
+
 
       
       <View style={{marginTop:20}}>
@@ -105,7 +130,9 @@ useEffect(() => {
    
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <TouchableOpacity onPress={() =>{
-        saveUser()
+
+       
+
         router.dismissTo("/(tabs)")
       
         
@@ -134,5 +161,6 @@ const styles = StyleSheet.create({
 });
 function setLoading(arg0: boolean) {
   throw new Error("Function not implemented.");
+
 }
 
