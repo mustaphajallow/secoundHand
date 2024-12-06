@@ -1,7 +1,7 @@
 
 // app/home/product/[id].js
 import { useLocalSearchParams } from "expo-router";
-import { ImageBackground, Platform, TextInput } from "react-native";
+import { FlatList, ImageBackground, Platform, TextInput } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -15,19 +15,39 @@ import {
   StatusBar,
   SafeAreaView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Search from "@/assets/icons/Search";
 
 import Poduct from "@/components/Product";
 
 import LogoIcon from "@/assets/icons/LogoIcon";
+import { productsList } from "@/components/ProductServices";
 
 
 export default function ProductList() {
   const { id } = useLocalSearchParams(); // Get the product ID from the route
-  const [text, onChangeText] = React.useState("Search ");
-  const [number, onChangeNumber] = React.useState("");
+  const [text, onChangeText] =   useState("Search ");
+  const [loading, setLoading] = useState(true);
+
+  
+ const [products , setProducts] = useState([])
+
+ useEffect(()=>{
+
+  const fetchProduct = async ()=>{
+    try{
+      const data = await productsList();
+      setProducts(data);
+    }catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false);  // Stop the loading indicator
+    }
+  }
+  fetchProduct();
+ },[]);
+
   return (
     <SafeAreaView style={styles.container}>
               <StatusBar barStyle="light-content" />
@@ -69,16 +89,19 @@ export default function ProductList() {
 
         {/* Flash Sale Items */}
         <View style={styles.flashSaleItems}>
-          {productData.map((p, index) => {
-            return (
-              <Poduct
-              key={index}
-                image={p.image}
-                price={p.price}
-                discription={p.discription}
+        <FlatList
+           data={product}
+         renderItem={(data)=>{ return(
+          <Poduct
+              key={data.index}
+                image={data.image}
+                price={data.price}
+                discription={data.discription}
               />
-            );
-          })}
+         )}}
+      
+           />
+       
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -177,6 +200,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     padding: 16,
+   
   },
   item: {
     alignItems: "center",

@@ -24,6 +24,7 @@ import Cloths from "@/assets/icons/Cloths";
 import Forniturs from "@/assets/icons/Forniturs";
 import LogoIcon from "@/assets/icons/LogoIcon";
 import AddIcon from "@/assets/icons/AddIcon";
+import { Link } from "expo-router";
 
 // import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -41,10 +42,13 @@ export default function Shop() {
           </View>
         
           <Text style={styles.brandName}>Your Product</Text>
-          <View style={styles.icons}>
+          <Link href={"/(stacks)/AddProduct"} style={styles.icons}>
+          <View>
             <AddIcon color="black" width={25}  height={25} />
             {/* <Icon name="notifications-outline" size={24} style={styles.iconSpacing} /> */}
           </View>
+          </Link>
+          
         </View>
         {/* search you need */}
         <View style={styles.topBar}>

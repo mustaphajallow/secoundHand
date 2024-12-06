@@ -106,7 +106,7 @@ const [newAcc , setNewAcc] = useState({})
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <TouchableOpacity onPress={() => {
        
-        
+            router.dismissTo("/(tabs)")
        
       }}  style={{ display:"flex", alignItems:"center",justifyContent:"center" ,flexDirection:"row",
                 backgroundColor:"#fa5a2a",padding:14, borderRadius:10, marginTop:23}}>

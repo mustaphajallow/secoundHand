@@ -10,7 +10,7 @@ export default function Layout() {
       <Stack.Screen
         name="SignUp"
         options={{
-          presentation: 'modal',
+          presentation: 'fullScreenModal',
           headerShown:false,
         }}
       />

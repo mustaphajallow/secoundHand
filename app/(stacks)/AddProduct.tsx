@@ -20,9 +20,10 @@ import Search from "@/assets/icons/Search";
 import Poduct from "@/components/Product";
 
 import LogoIcon from "@/assets/icons/LogoIcon";
- import { CreateProduct, productsList } from "@/components/productServicess";
+
 import * as ImagePicker from 'expo-image-picker';
 import ImageIcon from "@/assets/icons/ImageIcon";
+import { CreateProduct, productsList } from "@/components/ProductServices";
 
 
 export default  function AddProduct () {

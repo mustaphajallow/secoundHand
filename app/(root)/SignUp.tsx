@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useRouter } from "expo-router";
 
 import { SafeAreaView } from "react-native-safe-area-context";
