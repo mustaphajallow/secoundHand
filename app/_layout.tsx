@@ -36,6 +36,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider  value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <StatusBar style="inverted" /> 
       <Stack initialRouteName='(root)' screenOptions={{
         headerShown:false
       }}>
@@ -52,7 +53,7 @@ export default function RootLayout() {
           
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+     
     </ThemeProvider>
   );
 

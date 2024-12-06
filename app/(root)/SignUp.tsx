@@ -5,11 +5,13 @@ import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { routeToScreen } from "expo-router/build/useScreens";
 
+
 import SigninIcon from "../../assets/icons/signin";
 import { getAllUsers } from "@/components/userServices";
 
 
 // import { auth } from "@/components/firebase.";
+
 
 
   export default function SignUp (){
@@ -18,6 +20,7 @@ import { getAllUsers } from "@/components/userServices";
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+
 
   // const handleSignup=() =>{
   //   auth.createUserWithEmailAndPassword(email , password )
@@ -35,6 +38,18 @@ import { getAllUsers } from "@/components/userServices";
   
 // }
 const [users, setUsers] = useState([]);
+
+
+function saveUser(){
+const User = {firstName,email ,password}
+   console.log(User)
+  CreateUsers(User)
+  const list = listUsers;
+  console.log(list)
+  
+}
+const [users, setUsers] = useState([]);
+
 
 useEffect(() => {
   const fetchUsers = async () => {
@@ -65,7 +80,9 @@ useEffect(() => {
    
       </View>
 
+
       <Text style={{fontWeight:"600", fontSize:30}}>SignUp</Text>
+
 
 
       
@@ -113,7 +130,9 @@ useEffect(() => {
    
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <TouchableOpacity onPress={() =>{
+
        
+
         router.dismissTo("/(tabs)")
       
         
@@ -142,4 +161,6 @@ const styles = StyleSheet.create({
 });
 function setLoading(arg0: boolean) {
   throw new Error("Function not implemented.");
+
 }
+

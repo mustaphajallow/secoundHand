@@ -1,4 +1,5 @@
 import { router, Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function Layout() {
@@ -21,13 +22,17 @@ export default function Layout() {
           presentation: "fullScreenModal",
         }}
       />
+
            <Stack.Screen
+
         name="AddProduct"
         options={{
           headerShown:false,
           presentation: "fullScreenModal",
         }}
       />
+
+
     </Stack>
   );
 

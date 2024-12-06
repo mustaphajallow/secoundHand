@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import Svg, { Rect, Circle, Path } from "react-native-svg";
 const ImageIcon = (props) => (
   <Svg
@@ -37,5 +38,6 @@ const ImageIcon = (props) => (
       strokeWidth={32}
     />
   </Svg>
+
 );
 export default ImageIcon;

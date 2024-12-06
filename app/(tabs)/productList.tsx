@@ -22,11 +22,14 @@ import Search from "@/assets/icons/Search";
 import Poduct from "@/components/Product";
 
 import LogoIcon from "@/assets/icons/LogoIcon";
+
 import { productsList } from "@/components/ProductServices";
+
 
 
 export default function ProductList() {
   const { id } = useLocalSearchParams(); // Get the product ID from the route
+
   const [text, onChangeText] =   useState("Search ");
   const [loading, setLoading] = useState(true);
 
@@ -48,9 +51,23 @@ export default function ProductList() {
   fetchProduct();
  },[]);
 
+
+  const [text, onChangeText] = React.useState("Search ");
+  const [number, onChangeNumber] = React.useState("");
+   const [products , setProducts] = useState([])
+
+   useEffect(()=>{
+    const getproduct=async ()=>{
+      const data = await productsList();
+      setProducts(data);
+    }
+    getproduct()
+   },[])
+ 
+
   return (
     <SafeAreaView style={styles.container}>
-              <StatusBar barStyle="light-content" />
+              <StatusBar barStyle="dark-content" />
 
       <ScrollView>
       
@@ -90,6 +107,7 @@ export default function ProductList() {
         {/* Flash Sale Items */}
         <View style={styles.flashSaleItems}>
         <FlatList
+
            data={product}
          renderItem={(data)=>{ return(
           <Poduct
@@ -102,6 +120,7 @@ export default function ProductList() {
       
            />
        
+
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,3 +1,4 @@
+
 import { router, useLocalSearchParams } from "expo-router";
 import { Button, ImageBackground, Platform, TextInput } from "react-native";
 
@@ -21,9 +22,11 @@ import Poduct from "@/components/Product";
 
 import LogoIcon from "@/assets/icons/LogoIcon";
 
+
 import * as ImagePicker from 'expo-image-picker';
 import ImageIcon from "@/assets/icons/ImageIcon";
 import { CreateProduct, productsList } from "@/components/ProductServices";
+
 
 
 export default  function AddProduct () {
@@ -339,4 +342,6 @@ const productData = [
 
 function setLoading(arg0: boolean) {
   throw new Error("Function not implemented.");
+
 }
+
