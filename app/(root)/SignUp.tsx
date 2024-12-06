@@ -1,20 +1,56 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useRouter } from "expo-router";
-import SigninIcon from "@/assets/icons/signin";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { routeToScreen } from "expo-router/build/useScreens";
 
+import SigninIcon from "../../assets/icons/signin";
+import { getAllUsers } from "@/components/userServices";
+
+
+// import { auth } from "@/components/firebase.";
+
 
   export default function SignUp (){
+    const [firstName, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
 
+  // const handleSignup=() =>{
+  //   auth.createUserWithEmailAndPassword(email , password )
+  //   .then(( usercretenteial )=>{  const user = usercretenteial.user
+  //     console.log("register w ith",user.email)
+  //   }) .catch(error => alert(error.message))
+  // }
 
-      
+// function saveUser(){
+// const User = {firstName,email ,password}
+//    console.log(User)
+//   CreateUsers(User)
+//   const list = listUsers;
+//   console.log(list)
+  
+// }
+const [users, setUsers] = useState([]);
+
+useEffect(() => {
+  const fetchUsers = async () => {
+    try {
+      const data = await getAllUsers(); // Call the API function
+      setUsers(data); // Update state with the fetched users
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false); // Stop the loading indicator
+    }
+  };
+
+  fetchUsers();
+}, []);
 
   return (
     <KeyboardAvoidingView style={styles.container}  
@@ -29,9 +65,11 @@ import { routeToScreen } from "expo-router/build/useScreens";
   
    
       </View>
-   
 
       <Text style={{fontWeight:"600", fontSize:30}}>SignUp</Text>
+
+
+      
       <View style={{marginTop:20}}>
              <Text style={{fontSize:16}}>User Name</Text>
       <TextInput
@@ -39,8 +77,8 @@ import { routeToScreen } from "expo-router/build/useScreens";
         placeholder="jon doe"
         
         placeholderTextColor={"#56666B"}
-        value={email}
-        onChangeText={setEmail}
+        value={firstName}
+        onChangeText={setName}
       />
         </View>
 
@@ -76,9 +114,10 @@ import { routeToScreen } from "expo-router/build/useScreens";
    
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <TouchableOpacity onPress={() =>{
+       
+        router.dismissTo("/(tabs)")
+      
         
-router.push("/(tabs)")
-
       } }  style={{ display:"flex", alignItems:"center",justifyContent:"center" ,flexDirection:"row",
                 backgroundColor:"#fa5a2a",padding:14, borderRadius:10, marginTop:23}}>
               
@@ -102,3 +141,6 @@ const styles = StyleSheet.create({
   input: { borderWidth: 0, marginVertical: 8, padding: 8, borderRadius: 4,color:"black", borderBottomWidth:1 },
   error: { color: "red", marginVertical: 4 },
 });
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
